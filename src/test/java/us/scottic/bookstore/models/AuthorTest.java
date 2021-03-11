@@ -1,36 +1,20 @@
 package us.scottic.bookstore.models;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class AuthorTest {
 
     @Test
-    void getId() {
-    }
+    void getAndSetNames() {
+        Author author = new Author();
+        author.setFirstName("Test");
+        Assertions.assertEquals("Test", author.getFirstName());
 
-    @Test
-    void getFirstName() {
-    }
+        author.setMiddleName("John");
+        Assertions.assertEquals("John", author.getMiddleName());
 
-    @Test
-    void setFirstName() {
-    }
-
-    @Test
-    void getMiddleName() {
-    }
-
-    @Test
-    void setMiddleName() {
-    }
-
-    @Test
-    void getLastName() {
-    }
-
-    @Test
-    void setLastName() {
+        author.setLastName("Testing");
+        Assertions.assertEquals("Testing", author.getLastName());
     }
 }

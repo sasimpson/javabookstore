@@ -1,40 +1,16 @@
 package us.scottic.bookstore.models;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
 
-import static org.junit.jupiter.api.Assertions.*;
-
+@SpringBootTest
 class BookTest {
-
     @Test
-    void getId() {
+    void getAndSetTitle() {
+        Book book = new Book();
+        book.setTitle("test title");
+        Assertions.assertEquals("test title", book.getTitle());
     }
 
-    @Test
-    void getTitle() {
-    }
-
-    @Test
-    void setTitle() {
-    }
-
-    @Test
-    void testGetId() {
-    }
-
-    @Test
-    void testGetTitle() {
-    }
-
-    @Test
-    void testSetTitle() {
-    }
-
-    @Test
-    void getAuthors() {
-    }
-
-    @Test
-    void setAuthors() {
-    }
 }

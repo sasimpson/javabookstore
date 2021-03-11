@@ -1,14 +1,9 @@
 package us.scottic.bookstore.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import lombok.Data;
 
-@Entity
+@Data
 public class Author {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String firstName;
     private String middleName;
@@ -16,17 +11,9 @@ public class Author {
 
     public Author() {}
 
-    public Author(String firstName, String lastName) {
+    public Author(String firstName, String middleName, String lastName) {
         this.firstName = firstName;
+        this.middleName = middleName;
         this.lastName = lastName;
-    }
-
-    @Override
-    public String toString() {
-        return "Author{" +
-                "firstName='" + firstName + '\'' +
-                ", middleName='" + middleName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                '}';
     }
 }
