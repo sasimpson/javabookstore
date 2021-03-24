@@ -1,9 +1,9 @@
 package us.scottic.bookstore.controllers;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 import us.scottic.bookstore.models.Book;
+import us.scottic.bookstore.repositories.BookRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,10 +12,22 @@ import java.util.List;
 @RequestMapping(path = "/books")
 public class BookController {
 
+    @Autowired
+    private BookRepository bookRepository;
+
     @GetMapping
     public List<Book> getAllBooks() {
         List<Book> books = new ArrayList<>();
-        books.add(new Book("Database Internals"));
+        Iterable<Book> results = bookRepository.findAll();
+        for (Book book : results)
+            books.add(book);
         return books;
+
+    }
+
+    @PostMapping
+    public @ResponseBody Book addBook(@RequestBody Book book) {
+        bookRepository.save(book);
+        return book;
     }
 }

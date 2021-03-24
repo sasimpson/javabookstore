@@ -7,7 +7,6 @@ import us.scottic.bookstore.repositories.AuthorRepository;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Consumer;
 
 @RestController
 @RequestMapping(path = "/authors")
@@ -18,18 +17,10 @@ public class AuthorController {
 
     @GetMapping
     public @ResponseBody List<Author> getAllAuthors() {
-
         List<Author> authors = new ArrayList<>();
         Iterable<Author> results = authorRepository.findAll();
-        if (results != null) {
-            results.forEach(new Consumer<Author>() {
-                @Override
-                public void accept(Author author) {
-                    authors.add(author);
-                }
-            });
-            return authors;
-        }
+        for (Author author : results)
+            authors.add(author);
         return authors;
     }
 
