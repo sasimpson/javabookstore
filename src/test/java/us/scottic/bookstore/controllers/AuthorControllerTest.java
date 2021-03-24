@@ -1,32 +1,43 @@
 package us.scottic.bookstore.controllers;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.mock.web.MockHttpServletRequest;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+import us.scottic.bookstore.models.Author;
+import us.scottic.bookstore.repositories.AuthorRepository;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standaloneSetup;
+import java.util.Collections;
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.when;
 
 @SpringBootTest
 class AuthorControllerTest {
+    @InjectMocks
+    AuthorController authorController;
 
-    MockMvc mockMvc;
-
-    @BeforeEach
-    void setUp() {
-        this.mockMvc = standaloneSetup(new AuthorController()).build();
-    }
+    @Mock
+    AuthorRepository authorRepository;
 
     @Test
-    void getAllUsers() throws Exception {
-        this.mockMvc.perform(get("/authors").accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.[0].firstName").value("Obi"))
-                .andExpect(jsonPath("$.[0].middleName").value("Wan"))
-                .andExpect(jsonPath("$.[0].lastName").value("Kenobi"));
+    public void testGetAllUsers() {
+        //given
+        MockHttpServletRequest request = new MockHttpServletRequest();
+        RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));
+
+        when(authorRepository.findAll()).thenReturn(Collections.singletonList(new Author("Obi", "Wan", "Kenobi")));
+
+        //when
+        List<Author> result = authorController.getAllAuthors();
+
+        //then
+        assertThat(result.size()).isEqualTo(1);
+
     }
+
 }
